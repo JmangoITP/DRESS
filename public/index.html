@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+<script src="https://simplewebrtc.com/latest-v2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn-orig.socket.io/socket.io-1.7.3.js"></script>
+<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+<style>
+
+.shirtButton{
+  padding: 15px 25px;
+ font-size: 15px;
+ text-align: center;
+ cursor: pointer;
+ outline: none;
+ color: #CCCCCC;
+ background-color: #1E1E1E;
+ border: none;
+ border-radius: 15px;
+ box-shadow: 0 9px #3D3D3D;
+}
+.shirtButton:hover {background-color: #1E1E1E}
+
+.shirtButton:active {
+  background-color: #1E1E1E;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.imgBut{
+  padding: 15px 25px;
+ font-size: 15px;
+ text-align: center;
+ cursor: pointer;
+ outline: none;
+ color: #CCCCCC;
+ background-color: #1E1E1E;
+ border: none;
+ border-radius: 15px;
+ box-shadow: 0 9px #3D3D3D;
+ padding-top: : 10px;
+ margin-top: 20px;
+}
+
+.imgBut:hover {background-color: #1E1E1E}
+
+.imgBut:active {
+  background-color: #1E1E1E;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+.text{
+  margin-top: 20px;
+  margin-left: 40px;
+}
+#localVideo{
+  margin-left: 40px;
+  margin-top: 20px;
+  /*border-radius: 30px;*/
+  border-radius: 15px;
+  box-shadow: 0 9px #3D3D3D;
+}
+</style>
+</head>
+<body>
+   <script src="js/jquery-3.2.0.min.js"></script>
+  <script src = "//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- <button type="button" onclick="proceed();">ON</button>
+<button type="button" onclick="proceed();">OFF</button> -->
+<button class="shirtButton" id="SHIRT">SHIRT</button>
+<button class="shirtButton" id="PANTS">PANTS</button>
+<button class="shirtButton" id="SOCKS">SOCKS</button>
+<button class="shirtButton" id="SHOES">SHOES</button>
+
+<script>
+var socket = io();
+</script>
+<script>
+
+$("#SHIRT").click(function(){
+    $.get("/shirt", function(res){
+        // console.log(res);
+    });
+});
+
+$("#PANTS").click(function(data){
+  // console.log(data);
+    $.get("/pants", function(res){
+        // console.log(res);
+    });
+});
+
+$("#SOCKS").click(function(data){
+  // console.log(data);
+    $.get("/socks", function(res){
+        // console.log(res);
+    });
+});
+
+
+$("#SHOES").click(function(data){
+  // console.log(data);
+    $.get("/shoes", function(res){
+        // console.log(res);
+    });
+});
+</script>
+<script>
+
+  socket.on('broadcast',function(data){
+    // socet.emit("whats_up");
+      // document.body.innerHTML = '';
+      // document.write(data.description);
+      console.log(data.description);
+  });
+
+  socket.on("pants",function(){
+    document.getElementById('pants_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('pants_').style.display = 'none';
+      //socket.emit("shirt");
+    }, 3000);
+  })
+
+  socket.on("socks",function(){
+    document.getElementById('socks_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('socks_').style.display = 'none';
+      //socket.emit("shirt");
+    }, 3000);
+  })
+
+  socket.on("shirt",function(){
+    document.getElementById('shirt_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('shirt_').style.display = 'none';
+      //socket.emit("shirt");
+    }, 3000);
+  })
+  </script>
+
+
+  <video height="180" id="localVideo"></video>
+  <div id="remotesVideos"></div>
+
+<input class="imgBut" id="SHTbutton" type="submit" name="button" onclick="shirt();" value="Shirt"/>
+<input class="imgBut"id="PATbutton" type="submit" name="button" onclick="pants();" value="Pants"/>
+<input class="imgBut" id="SOCbutton" type="submit" name="button" onclick="socks();" value="Socks"/>
+
+<img class="text" id="shirt_" src="img/shirt.png" style="display : none" />
+<img class="text"id="pants_" src="img/pants.png" style="display : none" />
+<img class="text"id="socks_" src="img/socks.png" style="display : none" />
+
+<div id="localVideo"></div>
+<div id="remoteVideo"></div>
+
+<script>
+
+document.body.onkeydown = function(e){
+    if(document.getElementById("btn")){
+      document.getElementById('star').src = "/img/star_on.gif"
+    }
+}
+</script>
+<script>
+
+var webrtc = new SimpleWebRTC({
+	localVideoEl: 'localVideo',
+	remoteVideosEl: 'remoteVideo',
+	autoRequestMedia: true,
+  media: {
+    video: {
+      mandatory: {
+        maxWidth: 300,
+        maxHeight: 180
+      }
+    }
+  }
+});
+
+webrtc.on('readyToCall', function () {
+	webrtc.joinRoom('DRESS PLAY TEST');
+});
+
+webrtc.on('videoAdded', function (video, peer) {
+    console.log('video added', peer);
+    var remotes = document.getElementById('remotes');
+    if (remotes) {
+        var container = document.createElement('div');
+        container.className = 'videoContainer';
+        container.id = 'container_' + webrtc.getDomId(peer);
+        container.appendChild(video);
+
+        // suppress contextmenu
+        video.oncontextmenu = function () { return false; };
+
+        remotes.appendChild(container);
+    }
+});
+
+webrtc.on('videoRemoved', function (video, peer) {
+    console.log('video removed ', peer);
+    var remotes = document.getElementById('remotes');
+    var el = document.getElementById(peer ? 'container_' + webrtc.getDomId(peer) : 'localScreenContainer');
+    if (remotes && el) {
+        remotes.removeChild(el);
+    }
+});
+
+</script>
+
+<script>
+
+function pants(){
+  var myPants = document.getElementById("pants_");
+  myPants.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById("pants_").style.display = 'none';
+    socket.emit("pants");
+  }, 3000);
+}
+function socks(){
+  var mySocks = document.getElementById("socks_");
+  mySocks.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById("socks_").style.display = 'none';
+    socket.emit("socks");
+  }, 3000);
+}
+
+function shirt(){
+var myShirt = document.getElementById("shirt_");
+  myShirt.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById('shirt_').style.display = 'none';
+    socket.emit("shirt");
+  }, 3000);
+};
+</script>
+</body>
+</html>
