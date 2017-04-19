@@ -15,9 +15,6 @@ applet.use(function(req, res, next) {
 console.log('server running');
 // applet.use(express.static('public'))
 applet.use(express.static(__dirname + '/public'));
-
-
-
 // create a route for the arduino
 applet.get('/shirt', function(req, res){
 	// console.log('hit ON route');
@@ -27,10 +24,6 @@ applet.get('/shirt', function(req, res){
 	});
 	res.send('shirt');
 });
-
-
-
-
 applet.get('/pants', function(req, res){
 	// console.log('hit OFF route');
 	// make a request to the arduino url
@@ -41,7 +34,6 @@ applet.get('/pants', function(req, res){
 	res.send('pants');
 });
 
-
 applet.get('/socks', function(req, res){
 	// console.log('hit OFF route');
 	// make a request to the arduino url
@@ -51,8 +43,6 @@ applet.get('/socks', function(req, res){
 	});
 	res.send('socks');
 });
-
-
 
 applet.get('/shoes', function(req, res){
 	// console.log('hit OFF route');
@@ -106,6 +96,7 @@ pem.createCertificate({days:1, selfSigned:true}, function(err,keys){
 		socket.on("socks",function(){
 			socket.broadcast.emit("socks");
 		});
+
 		socket.on('disconnect', function () {
 			clients--;
 			io.sockets.emit('broadcast',{ description: clients + ' clients connected!'});

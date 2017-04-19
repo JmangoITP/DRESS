@@ -61,12 +61,20 @@
   margin-top: 20px;
   margin-left: 40px;
 }
-#localVideo{
+
+/*.connectionstate {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    text-align: center;
+    color: #fff
+}*/
+
+#remotesVideos{
   margin-left: 40px;
   margin-top: 20px;
-  /*border-radius: 30px;*/
+  border-radius: 30px;
   border-radius: 15px;
-  box-shadow: 0 9px #3D3D3D;
 }
 </style>
 </head>
@@ -85,6 +93,8 @@
 var socket = io();
 </script>
 <script>
+
+// <div id="remotes"> </div>
 
 $("#SHIRT").click(function(){
     $.get("/shirt", function(res){
@@ -149,8 +159,8 @@ $("#SHOES").click(function(data){
   </script>
 
 
-  <video height="180" id="localVideo"></video>
-  <div id="remotesVideos"></div>
+  <!-- <video height="180" id="remotesVideos"></video> -->
+
 
 <input class="imgBut" id="SHTbutton" type="submit" name="button" onclick="shirt();" value="Shirt"/>
 <input class="imgBut"id="PATbutton" type="submit" name="button" onclick="pants();" value="Pants"/>
@@ -160,23 +170,22 @@ $("#SHOES").click(function(data){
 <img class="text"id="pants_" src="img/pants.png" style="display : none" />
 <img class="text"id="socks_" src="img/socks.png" style="display : none" />
 
-<div id="localVideo"></div>
-<div id="remoteVideo"></div>
+<!-- <div id="localVideo"></div> -->
+<div  height="180" id="remotesVideos"></div>
+<!-- <div id="remoteVideos"></div> -->
 
-<script>
 
-document.body.onkeydown = function(e){
-    if(document.getElementById("btn")){
-      document.getElementById('star').src = "/img/star_on.gif"
-    }
-}
-</script>
 <script>
 
 var webrtc = new SimpleWebRTC({
-	localVideoEl: 'localVideo',
-	remoteVideosEl: 'remoteVideo',
+	// localVideoEl: 'localVideo',
+	remoteVideosEl: 'remotesVideos',
 	autoRequestMedia: true,
+
+//   receiveMedia: {
+//     offerToReceiveAudio: 0,
+//     offerToReceiveVideo: 0,
+// }
   media: {
     video: {
       mandatory: {
@@ -187,9 +196,16 @@ var webrtc = new SimpleWebRTC({
   }
 });
 
-webrtc.on('readyToCall', function () {
+// webrtc.on('readyToCall', function () {
 	webrtc.joinRoom('DRESS PLAY TEST');
+// });
+
+webrtc.on('createdPeer', function (peer) {
+    console.log('createdPeer', peer);
+
 });
+
+
 
 webrtc.on('videoAdded', function (video, peer) {
     console.log('video added', peer);
@@ -215,6 +231,7 @@ webrtc.on('videoRemoved', function (video, peer) {
         remotes.removeChild(el);
     }
 });
+
 
 </script>
 
