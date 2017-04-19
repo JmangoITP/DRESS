@@ -4,29 +4,82 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
 <script src="https://simplewebrtc.com/latest-v2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdn-orig.socket.io/socket.io-1.7.3.js"></script>
-<!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
 <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 </head>
 <body>
-<script>
-console.log('patient my balls');
 
+  <audio id="myAudio">
+  <source src="img/clap.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+  </script>
+
+<script>
+var socket = io();
+</script>
+
+<script>
+  socket.on('broadcast',function(data){
+
+      console.log(data.description);
+  });
+
+  socket.on("pants",function(){
+    var x = document.getElementById("myAudio");
+    var vid = document.getElementById("myVideo");
+      x.play();
+      vid.play();
+    document.getElementById('pants_').style.display = 'block';
+    document.getElementById("myVideo").style.display = 'block';
+    console.log("hello")
+    window.setTimeout(function(){
+      document.getElementById('pants_').style.display = 'none';
+
+    }, 3000);
+      window.setTimeout(function(){
+        document.getElementById("myVideo").style.display = 'none';
+      }, 7000);
+  })
+
+  socket.on("socks",function(){
+    document.getElementById('socks_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('socks_').style.display = 'none';
+    }, 3000);
+  })
+
+  socket.on("shirt",function(){
+    document.getElementById('shirt_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('shirt_').style.display = 'none';
+      //socket.emit("shirt");
+    }, 3000);
+  })
+
+
+  </script>
+
+  <script>
+
+  </script>
+
+<img class="text" id="shirt_" src="img/shirt.png" style="display : none" />
+<img class="text"id="pants_" src="img/pants.png" style="display : none" />
+<img class="text"id="socks_" src="img/socks.png" style="display : none" />
+
+<video id="myVideo" width="320" height="176" style="display : none">
+  <source src="img/fingers.mp4" type="video/mp4">
+</video>
+
+
+<script>
 var webrtc = new SimpleWebRTC({
-	// localVideoEl: 'localVideo',
 	remoteVideosEl: 'remotesVideos',
 	autoRequestMedia: true,
-
-//   receiveMedia: {
-//     offerToReceiveAudio: 0,
-//     offerToReceiveVideo: 0,
-// }
   media: {
     video: {
       mandatory: {
@@ -46,6 +99,41 @@ webrtc.on('createdPeer', function (peer) {
 
 });
 
+</script>
+
+<script>
+var happen = false;
+
+function pants(){
+  happen = true;
+
+  var myPants = document.getElementById("pants_");
+  var x = document.getElementById("myAudio");
+  myPants.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById("pants_").style.display = 'none';
+    socket.emit("pants");
+    playAudio();
+  }, 3000);
+}
+
+function socks(){
+  var mySocks = document.getElementById("socks_");
+  mySocks.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById("socks_").style.display = 'none';
+    socket.emit("socks");
+  }, 3000);
+}
+
+function shirt(){
+var myShirt = document.getElementById("shirt_");
+  myShirt.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById('shirt_').style.display = 'none';
+    socket.emit("shirt");
+  }, 3000);
+};
 
 </script>
 </body>

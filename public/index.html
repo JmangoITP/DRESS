@@ -209,6 +209,7 @@ webrtc.on('createdPeer', function (peer) {
 
 webrtc.on('videoAdded', function (video, peer) {
     console.log('video added', peer);
+    // console.log("dog");
     var remotes = document.getElementById('remotes');
     if (remotes) {
         var container = document.createElement('div');
