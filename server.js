@@ -96,6 +96,9 @@ pem.createCertificate({days:1, selfSigned:true}, function(err,keys){
 		socket.on("socks",function(){
 			socket.broadcast.emit("socks");
 		});
+    socket.on("shoes",function(){
+      socket.broadcast.emit("shoes");
+    });
 
 		socket.on('disconnect', function () {
 			clients--;

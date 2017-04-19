@@ -15,29 +15,10 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 <style>
 
-.shirtButton{
-  padding: 15px 25px;
- font-size: 15px;
- text-align: center;
- cursor: pointer;
- outline: none;
- color: #CCCCCC;
- background-color: #1E1E1E;
- border: none;
- border-radius: 15px;
- box-shadow: 0 9px #3D3D3D;
-}
-.shirtButton:hover {background-color: #1E1E1E}
-
-.shirtButton:active {
-  background-color: #1E1E1E;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
 
 .imgBut{
   padding: 15px 25px;
- font-size: 15px;
+ font-size: 20px;
  text-align: center;
  cursor: pointer;
  outline: none;
@@ -85,10 +66,10 @@
 <script src="js/bootstrap.min.js"></script>
 <!-- <button type="button" onclick="proceed();">ON</button>
 <button type="button" onclick="proceed();">OFF</button> -->
-<button class="shirtButton" id="SHIRT">SHIRT</button>
-<button class="shirtButton" id="PANTS">PANTS</button>
-<button class="shirtButton" id="SOCKS">SOCKS</button>
-<button class="shirtButton" id="SHOES">SHOES</button>
+<!-- <button class="shirtButton" id="SHIRT">SHIRT</button> -->
+<!-- <button class="shirtButton" id="PANTS">PANTS</button> -->
+<!-- <button class="shirtButton" id="SOCKS">SOCKS</button> -->
+<!-- <button class="shirtButton" id="SHOES">SHOES</button> -->
 
 <script>
 var socket = io();
@@ -97,33 +78,34 @@ var socket = io();
 
 // <div id="remotes"> </div>
 
-$("#SHIRT").click(function(){
-    $.get("/shirt", function(res){
-        // console.log(res);
-    });
-});
+// $("#SHIRT").click(function(){
+//     $.get("/shirt", function(res){
+// console.log("still happened");
+//     });
+//     console.log("still happened");
+// });
 
-$("#PANTS").click(function(data){
-  // console.log(data);
-    $.get("/pants", function(res){
-        // console.log(res);
-    });
-});
+// $("#PANTS").click(function(data){
+//   // console.log(data);
+//     $.get("/pants", function(res){
+//         // console.log(res);
+//     });
+// });
 
-$("#SOCKS").click(function(data){
-  // console.log(data);
-    $.get("/socks", function(res){
-        // console.log(res);
-    });
-});
+// $("#SOCKS").click(function(data){
+//   // console.log(data);
+//     $.get("/socks", function(res){
+//         // console.log(res);
+//     });
+// });
 
 
-$("#SHOES").click(function(data){
-  // console.log(data);
-    $.get("/shoes", function(res){
-        // console.log(res);
-    });
-});
+// $("#SHOES").click(function(data){
+//   // console.log(data);
+//     $.get("/shoes", function(res){
+//         // console.log(res);
+//     });
+// });
 </script>
 <script>
 
@@ -147,26 +129,43 @@ $("#SHOES").click(function(data){
     }, 3000);
   })
 
+  socket.on("shoes",function(){
+    document.getElementById('shoes_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('shoes_').style.display = 'none';
+      //socket.emit("shirt");
+    }, 3000);
+  })
+
   socket.on("shirt",function(){
+    $("#SHIRT").click(function(){
+        $.get("/shirt", function(res){
+
+        });
+        console.log("still happened");
+    });
     document.getElementById('shirt_').style.display = 'block';
     window.setTimeout(function(){
       document.getElementById('shirt_').style.display = 'none';
       //socket.emit("shirt");
     }, 3000);
   })
+
   </script>
 
 
   <!-- <video height="180" id="remotesVideos"></video> -->
 
 
-<input class="imgBut" id="SHTbutton" type="submit" name="button" onclick="shirt();" value="Shirt"/>
-<input class="imgBut"id="PATbutton" type="submit" name="button" onclick="pants();" value="Pants"/>
-<input class="imgBut" id="SOCbutton" type="submit" name="button" onclick="socks();" value="Socks"/>
+<input class="imgBut" id="SHTbutton" type="submit" name="button" onclick="shirt();" value="SHIRT"/>
+<input class="imgBut"id="PATbutton" type="submit" name="button" onclick="pants();" value="PANTS"/>
+<input class="imgBut" id="SOCbutton" type="submit" name="button" onclick="socks();" value="SOCKS"/>
+<input class="imgBut" id="SHObutton" type="submit" name="button" onclick="shoes();" value="SHOES"/>
 
 <img class="text" id="shirt_" src="img/shirt.png" style="display : none" />
 <img class="text"id="pants_" src="img/pants.png" style="display : none" />
 <img class="text"id="socks_" src="img/socks.png" style="display : none" />
+<img class="text"id="shoes_" src="img/shoes.png" style="display : none" />
 
 <!-- <div id="localVideo"></div> -->
 <div height="600" id="remotesVideos"></div>
@@ -179,15 +178,6 @@ var webrtc = new SimpleWebRTC({
 	// localVideoEl: 'localVideo',
 	remoteVideosEl: 'remotesVideos',
 	autoRequestMedia: true,
-
-  // media: {
-  //   video: {
-  //     mandatory: {
-  //       maxWidth: 600,
-  //       maxHeight: 480
-  //     }
-  //   }
-  // }
 });
 
 // webrtc.on('readyToCall', function () {
@@ -235,6 +225,9 @@ webrtc.on('videoRemoved', function (video, peer) {
 function pants(){
   var myPants = document.getElementById("pants_");
   myPants.style.display = "block";
+  $.get("/pants", function(res){
+      console.log("pants LED");
+  });
   window.setTimeout(function(){
     document.getElementById("pants_").style.display = 'none';
     socket.emit("pants");
@@ -243,6 +236,10 @@ function pants(){
 function socks(){
   var mySocks = document.getElementById("socks_");
   mySocks.style.display = "block";
+
+  $.get("/socks", function(res){
+      console.log("socks LED");
+  });
   window.setTimeout(function(){
     document.getElementById("socks_").style.display = 'none';
     socket.emit("socks");
@@ -250,11 +247,28 @@ function socks(){
 }
 
 function shirt(){
+
 var myShirt = document.getElementById("shirt_");
   myShirt.style.display = "block";
+  $.get("/shirt", function(res){
+console.log("Shirt LED");
+  });
   window.setTimeout(function(){
     document.getElementById('shirt_').style.display = 'none';
     socket.emit("shirt");
+  }, 3000);
+};
+
+function shoes(){
+
+var myShoes = document.getElementById("shoes_");
+  myShoes.style.display = "block";
+      $.get("/shoes", function(res){
+          console.log("shoes");
+      });
+  window.setTimeout(function(){
+    document.getElementById('shoes_').style.display = 'none';
+    socket.emit("shoes");
   }, 3000);
 };
 </script>

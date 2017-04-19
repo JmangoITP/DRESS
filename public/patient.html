@@ -44,7 +44,13 @@ var socket = io();
         document.getElementById("myVideo").style.display = 'none';
       }, 7000);
   })
-
+  socket.on("shoes",function(){
+    document.getElementById('shoes_').style.display = 'block';
+    window.setTimeout(function(){
+      document.getElementById('shoes_').style.display = 'none';
+      //socket.emit("shirt");
+    }, 3000);
+  })
   socket.on("socks",function(){
     document.getElementById('socks_').style.display = 'block';
     window.setTimeout(function(){
@@ -66,6 +72,7 @@ var socket = io();
 <img class="text" id="shirt_" src="img/shirt.png" style="display : none" />
 <img class="text"id="pants_" src="img/pants.png" style="display : none" />
 <img class="text"id="socks_" src="img/socks.png" style="display : none" />
+<img class="text"id="shoes_" src="img/shoes.png" style="display : none" />
 
 <video id="myVideo" width="320" height="176" style="display : none">
   <source src="img/fingers.mp4" type="video/mp4">
@@ -85,6 +92,7 @@ var webrtc = new SimpleWebRTC({
     }
   }
 });
+
 
 // webrtc.on('readyToCall', function () {
 	webrtc.joinRoom('DRESS PLAY TEST');
@@ -128,6 +136,16 @@ var myShirt = document.getElementById("shirt_");
   window.setTimeout(function(){
     document.getElementById('shirt_').style.display = 'none';
     socket.emit("shirt");
+  }, 3000);
+};
+
+function shoes(){
+
+var myShoes = document.getElementById("shoes_");
+  myShoes.style.display = "block";
+  window.setTimeout(function(){
+    document.getElementById('shoes_').style.display = 'none';
+    socket.emit("shoes");
   }, 3000);
 };
 
