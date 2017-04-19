@@ -63,10 +63,6 @@ var socket = io();
 
   </script>
 
-  <script>
-
-  </script>
-
 <img class="text" id="shirt_" src="img/shirt.png" style="display : none" />
 <img class="text"id="pants_" src="img/pants.png" style="display : none" />
 <img class="text"id="socks_" src="img/socks.png" style="display : none" />
@@ -78,13 +74,13 @@ var socket = io();
 
 <script>
 var webrtc = new SimpleWebRTC({
-	remoteVideosEl: 'remotesVideos',
+	// remoteVideosEl: 'remotesVideos',
 	autoRequestMedia: true,
   media: {
     video: {
       mandatory: {
-        maxWidth: 300,
-        maxHeight: 180
+        maxWidth: 700,
+        maxHeight: 480
       }
     }
   }

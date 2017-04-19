@@ -75,6 +75,7 @@
   margin-top: 20px;
   border-radius: 30px;
   border-radius: 15px;
+
 }
 </style>
 </head>
@@ -127,9 +128,6 @@ $("#SHOES").click(function(data){
 <script>
 
   socket.on('broadcast',function(data){
-    // socet.emit("whats_up");
-      // document.body.innerHTML = '';
-      // document.write(data.description);
       console.log(data.description);
   });
 
@@ -171,7 +169,7 @@ $("#SHOES").click(function(data){
 <img class="text"id="socks_" src="img/socks.png" style="display : none" />
 
 <!-- <div id="localVideo"></div> -->
-<div  height="180" id="remotesVideos"></div>
+<div height="600" id="remotesVideos"></div>
 <!-- <div id="remoteVideos"></div> -->
 
 
@@ -182,18 +180,14 @@ var webrtc = new SimpleWebRTC({
 	remoteVideosEl: 'remotesVideos',
 	autoRequestMedia: true,
 
-//   receiveMedia: {
-//     offerToReceiveAudio: 0,
-//     offerToReceiveVideo: 0,
-// }
-  media: {
-    video: {
-      mandatory: {
-        maxWidth: 300,
-        maxHeight: 180
-      }
-    }
-  }
+  // media: {
+  //   video: {
+  //     mandatory: {
+  //       maxWidth: 600,
+  //       maxHeight: 480
+  //     }
+  //   }
+  // }
 });
 
 // webrtc.on('readyToCall', function () {
